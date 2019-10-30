@@ -8,7 +8,7 @@ public class Main {
     public static void main(String[] arg) {
         test2();
     }
-
+    //34;trglkrhl;krgf3423423
     public static void test1(){
         Flat[] flats = new Flat[]{
                 new Flat(),
