@@ -4,7 +4,7 @@ public class Dwelling implements Building{
     private Floor[] dwellingFloors;
 
     //Конструктор может принимать массив этажей дома.
-    public Dwelling( DwellingFloor[] dwellingFloors) {
+    public Dwelling( Floor[] dwellingFloors) {
         Floor[] copyDwellingFloors = new DwellingFloor[dwellingFloors.length];
         System.arraycopy(dwellingFloors,0,copyDwellingFloors,0,dwellingFloors.length);
         this.dwellingFloors = copyDwellingFloors;

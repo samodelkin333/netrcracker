@@ -167,6 +167,23 @@ public class Main {
 
     }
 
+    public static void test3(){
+        Flat[] flats = new Flat[]{
+                new Flat(),
+                new Flat(15, 102),
+                new Flat(10, 67),
+
+        };
+
+        Flat[] flats2 = new Flat[]{
+                new Flat(),
+                new Flat(12, 55),
+                new Flat(11, 11),
+
+        };
+
+    }
+
     public static void get(Space[] flats){
         System.out.print("areas: ");
         for (int i = 0; i < flats.length ; i++) {
