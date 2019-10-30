@@ -8,13 +8,13 @@ public class Buildings {
     {
         OutputStreamWriter writer = new OutputStreamWriter(out);
         Floor[] floors = building.getFloors();
-        writer.write(floors.length);
+        writer.write(""+floors.length+" ");
         for (int i = 0; i < floors.length ; i++) {
-            writer.write(floors[i].getCountSpaces());
+            writer.write(""+floors[i].getCountSpaces()+" ");
             for (int j = 0; j < floors[i].getCountSpaces(); j++) {
                 Space space = floors[i].getSpace(j);
-                writer.write(space.getRoom());
-                writer.write((int)space.getArea());
+                writer.write(""+space.getRoom()+" ");
+                writer.write(""+space.getArea()+" ");
             }
         }
         writer.close();

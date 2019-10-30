@@ -3,12 +3,15 @@ import buildings.DwellingFloor;
 import buildings.Flat;
 import  buildings.*;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 
 public class Main {
-    public static void main(String[] arg) {
-        test2();
+    public static void main(String[] arg) throws IOException{
+        test3();
     }
-    //34;trglkrhl;krgf3423423
     public static void test1(){
         Flat[] flats = new Flat[]{
                 new Flat(),
@@ -167,7 +170,9 @@ public class Main {
 
     }
 
-    public static void test3(){
+    public static void test3() throws IOException
+
+    {
         Flat[] flats = new Flat[]{
                 new Flat(),
                 new Flat(15, 102),
@@ -181,6 +186,20 @@ public class Main {
                 new Flat(11, 11),
 
         };
+
+        DwellingFloor[] floors = new DwellingFloor[]{
+                new DwellingFloor(flats2),
+                new DwellingFloor(flats),
+                new DwellingFloor(flats2)
+        };
+
+        Dwelling dwelling = new Dwelling(floors);
+
+        Building building = dwelling;
+
+        Buildings.outputBuilding(dwelling, new FileOutputStream("./test.txt"));
+
+
 
     }
 
