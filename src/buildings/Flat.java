@@ -1,6 +1,6 @@
 package buildings;
-
-public class Flat implements Space{
+import java.io.*;
+public class Flat implements Space, Serializable {
     private int room;
     private double area;
     private static final int standartRoom = 2;

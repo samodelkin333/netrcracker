@@ -2,14 +2,10 @@ import buildings.Dwelling;
 import buildings.DwellingFloor;
 import buildings.Flat;
 import  buildings.*;
-
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-
+import java.io.*;
 
 public class Main {
-    public static void main(String[] arg) throws IOException{
+    public static void main(String[] arg) throws IOException,ClassNotFoundException{
         test3();
     }
     public static void test1(){
@@ -168,10 +164,10 @@ public class Main {
         get(officeBuilding.getSortedSpaceByArea());
 
 
+
     }
 
-    public static void test3() throws IOException
-
+    public static void test3() throws IOException, ClassNotFoundException
     {
         Flat[] flats = new Flat[]{
                 new Flat(),
@@ -193,11 +189,73 @@ public class Main {
                 new DwellingFloor(flats2)
         };
 
+        Office[] offices = new Office[]{
+                new Office(),
+                new Office(15, 290),
+                new Office(10, 67),
+
+        };
+
+        Office[] offices1 = new Office[]{
+                new Office(),
+                new Office(12, 55),
+                new Office(11, 11),
+
+        };
+
         Dwelling dwelling = new Dwelling(floors);
 
         Building building = dwelling;
 
         Buildings.outputBuilding(dwelling, new FileOutputStream("./test.txt"));
+        Building building1 =  Buildings.inputBuilding(new FileInputStream("./test.txt"));
+        Dwelling dwelling1 = new Dwelling(building1.getFloors());
+        for (int i = 0; i < dwelling1.getCountFloors() ; i++) {
+            get(dwelling1.getFloor(i).getMasSpaces());
+        }
+
+        Buildings.writeBuilding(dwelling, new FileWriter("./test1.txt"));
+        Building building2 = Buildings.readBuilding(new FileReader("./test1.txt"));
+        dwelling1 = new Dwelling(building2.getFloors());
+
+        for (int i = 0; i < dwelling1.getCountFloors() ; i++){
+            get(dwelling1.getFloor(i).getMasSpaces());
+        }
+
+        Flat flat = flats[1];
+        System.out.println("кол-во комнат квартиры: "+ flat.getRoom()+" площадь квартиры: "+ flat.getArea());
+
+        //сереализация flat
+        FileOutputStream outputStream = new FileOutputStream("./saveFlat.txt");
+        ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
+        objectOutputStream.writeObject(flat);
+        objectOutputStream.close();
+
+        FileInputStream inputStream = new FileInputStream("./saveFlat.txt");
+        ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+        Flat serFlat = (Flat)objectInputStream.readObject();
+        System.out.println("кол-во комнат квартиры: "+serFlat.getRoom()+" площадь квартиры: "+ serFlat.getArea());
+
+
+        DwellingFloor dwellingFloor = new DwellingFloor(flats) ;
+        System.out.println("кол-во квартир: "+dwellingFloor.getCountSpaces());
+        objectOutputStream = new ObjectOutputStream(new FileOutputStream("./saveDwellingFloor.txt"));
+        objectOutputStream.writeObject(dwellingFloor);
+        objectOutputStream.close();
+
+        objectInputStream = new ObjectInputStream(new FileInputStream("./saveDwellingFloor.txt"));
+        dwellingFloor = (DwellingFloor) objectInputStream.readObject();
+        System.out.println("кол-во квартир: "+dwellingFloor.getCountSpaces());
+
+       OfficeFloor officeFloor = new OfficeFloor(offices);
+        System.out.println("кол-во оф: "+ officeFloor.getCountSpaces());
+        objectOutputStream = new ObjectOutputStream(new FileOutputStream("./saveOfficeFloor.txt"));
+        objectOutputStream.writeObject(officeFloor);
+        objectOutputStream.close();
+
+        objectInputStream = new ObjectInputStream(new FileInputStream("./saveOfficeFloor.txt"));
+        officeFloor = (OfficeFloor) objectInputStream.readObject();
+        System.out.println("кол-во оф: "+officeFloor.getCountSpaces());
 
 
 

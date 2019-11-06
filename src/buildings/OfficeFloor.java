@@ -1,6 +1,8 @@
 package buildings;
 
-public class OfficeFloor implements Floor{
+import java.io.Serializable;
+
+public class OfficeFloor implements Floor, Serializable {
     private int size;
     private  OfficeNode head;
     private  OfficeNode tail;

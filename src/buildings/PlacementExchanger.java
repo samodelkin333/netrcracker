@@ -1,15 +1,6 @@
 package buildings;
 
 public class PlacementExchanger {
-//    private Space space;
-//    private Floor floor;
-//    private Building building;
-//
-//    public PlacementExchanger(Space space, Floor floor, Building bilding){
-//        this.building = bilding;
-//        this.floor = floor;
-//        this.space = space;
-//    }
 
     public static boolean checkSpaces(Space space2, Space space){
         return (space.getRoom() == space2.getRoom() && space.getArea() == space2.getArea());

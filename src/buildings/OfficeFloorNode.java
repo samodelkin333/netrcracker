@@ -1,6 +1,8 @@
 package buildings;
 
-public class OfficeFloorNode {
+import java.io.Serializable;
+
+public class OfficeFloorNode implements Serializable {
 
     OfficeFloorNode next;
     OfficeFloorNode previous;

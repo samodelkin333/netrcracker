@@ -1,6 +1,8 @@
 package buildings;
 
-public class Office implements Space{
+import java.io.Serializable;
+
+public class Office implements Space, Serializable {
     private int room;
     private double area;
     private static final int standartRoom = 1;

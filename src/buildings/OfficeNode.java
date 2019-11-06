@@ -1,6 +1,8 @@
 package buildings;
 
-public class OfficeNode {
+import java.io.Serializable;
+
+public class OfficeNode implements Serializable {
     OfficeNode next;
     Space value;
 
