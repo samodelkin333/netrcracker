@@ -1,4 +1,9 @@
-package buildings;
+package buildings.dwelling;
+
+import buildings.exception.InvalidRoomsCountException;
+import buildings.exception.InvalidSpaceAreaException;
+import interfaces.Space;
+
 import java.io.*;
 public class Flat implements Space, Serializable {
     private int room;

@@ -1,4 +1,6 @@
-package buildings;
+package buildings.office;
+
+import interfaces.Space;
 
 import java.io.Serializable;
 
@@ -15,4 +17,3 @@ public class OfficeNode implements Serializable {
         this.value = value;
     }
 }
-//

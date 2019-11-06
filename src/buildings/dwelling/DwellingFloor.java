@@ -1,4 +1,8 @@
-package buildings;
+package buildings.dwelling;
+
+import interfaces.Floor;
+import interfaces.Space;
+import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 
@@ -6,8 +10,8 @@ public class DwellingFloor implements Floor, Serializable {
     private Space[] flats;
 
     //Конструктор может принимать массив квартир этажа.
-    public  DwellingFloor(Flat[] flats){
-        Flat[] copyFlats = new Flat[flats.length];
+    public  DwellingFloor(Space[] flats){
+        Space[] copyFlats = new Flat[flats.length];
         System.arraycopy(flats,0,copyFlats,0,copyFlats.length);
         this.flats = flats;
     }

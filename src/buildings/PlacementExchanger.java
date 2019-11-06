@@ -1,5 +1,10 @@
 package buildings;
 
+import buildings.exception.*;
+import interfaces.Building;
+import interfaces.Floor;
+import interfaces.Space;
+
 public class PlacementExchanger {
 
     public static boolean checkSpaces(Space space2, Space space){
@@ -20,7 +25,7 @@ public class PlacementExchanger {
         floor2.setSpace(index2,space);
     }
 
-    public static void exchangeBuildingFloors(Building building1, int index1,Building building2, int index2) throws InexchangeableFloorsException
+    public static void exchangeBuildingFloors(Building building1, int index1, Building building2, int index2) throws InexchangeableFloorsException
     {
         if(index1 >  building1.getCountFloors() || index2 > building2.getCountFloors() || index1 > 0 || index2 >0) throw new FloorIndexOutOfBoundsException();
         Floor floor = building1.getFloor(index1);

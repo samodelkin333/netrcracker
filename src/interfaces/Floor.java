@@ -1,4 +1,6 @@
-package buildings;
+package interfaces;
+
+import interfaces.Space;
 
 public interface Floor {
     int getCountSpaces();

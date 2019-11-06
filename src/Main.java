@@ -1,7 +1,14 @@
-import buildings.Dwelling;
-import buildings.DwellingFloor;
-import buildings.Flat;
+import buildings.dwelling.Dwelling;
+import buildings.dwelling.DwellingFloor;
+import buildings.dwelling.Flat;
 import  buildings.*;
+import interfaces.Floor;
+import buildings.office.Office;
+import buildings.office.OfficeBuilding;
+import buildings.office.OfficeFloor;
+import interfaces.Building;
+import interfaces.Space;
+
 import java.io.*;
 
 public class Main {
