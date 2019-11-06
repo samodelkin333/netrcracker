@@ -4,27 +4,26 @@ import buildings.dwelling.DwellingFloor;
 import interfaces.Space;
 
 public class HotelFloor extends DwellingFloor {
-    private double coeff;
-    private static final double constCoeff = 1;
-
+    private double star;
+    private static final double constStar = 1;
 
     public HotelFloor(int count){
         super(count);
-        coeff = constCoeff;
+        star = constStar;
 
     }
 
     public HotelFloor(Space[] spaces){
         super(spaces);
-        coeff= constCoeff;
+        star = constStar;
     }
 
 
-    public double getCoeff() {
-        return coeff;
+    public double getStar() {
+        return star;
     }
 
-    public void setCoeff(double coeff) {
-        this.coeff = coeff;
+    public void setStar(double star) {
+        this.star = star;
     }
 }

@@ -7,8 +7,6 @@ import interfaces.Space;
 
 public class Hotel extends Dwelling {
 
-    private HotelFloor[] floors;
-
     public Hotel(int countFloors, int countSpaces){
         super(countFloors,countSpaces);
 
@@ -19,17 +17,36 @@ public class Hotel extends Dwelling {
         super(floors);
     }
 
-//    public double getMaxCoeff(){
-//        double maxCoef = 0;
-//        for (int i = 0; i < floors.length ; i++) {
-//           // if (floors[i] instanceof HotelFloor||maxCoef< floors[i].getCoeff())
-//
-//        }
-//        return null;
-//    }
+    public double getMaxCoeff(){
+        Floor[] floors = getFloors();
+        double countStar=0;
+        for (int i = 0; i < floors.length; i++) {
+            if (floors[i] instanceof HotelFloor) {
+                HotelFloor floor = (HotelFloor) floors[i];
+                countStar+= floor.getStar();
+            }
+        }
+        return countStar;
+    }
+
 
     public Space getBestSpace(){
+        Floor[] floors = getFloors();
+        double maxCoeff=0;
+        Space bestSpace;
+        for (int i = 0; i < floors.length ; i++) {
+            if (floors[i] instanceof HotelFloor){
+                HotelFloor floor = (HotelFloor) floors[i];
+                double coeff = floor.getStar()*0.25;
+                Space[] spaces = floor.getMasSpaces();
+                for (int j = 0; j < spaces.length; j++) {
+                    coeff *= spaces[i].getArea();
+                    if (maxCoeff< coeff) bestSpace = spaces[j];
+                }
 
-        return  null;
+            }
+        }
+        return null;
     }
 }
+
