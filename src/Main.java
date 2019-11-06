@@ -5,7 +5,7 @@ import  buildings.*;
 import java.io.*;
 
 public class Main {
-    public static void main(String[] arg) throws IOException,ClassNotFoundException{
+    public static void main(String[] arg) throws IOException,ClassNotFoundException, InexchangeableSpacesException{
         test3();
     }
     public static void test1(){
@@ -167,7 +167,7 @@ public class Main {
 
     }
 
-    public static void test3() throws IOException, ClassNotFoundException
+    public static void test3() throws IOException, ClassNotFoundException,InexchangeableSpacesException
     {
         Flat[] flats = new Flat[]{
                 new Flat(),
@@ -256,6 +256,11 @@ public class Main {
         objectInputStream = new ObjectInputStream(new FileInputStream("./saveOfficeFloor.txt"));
         officeFloor = (OfficeFloor) objectInputStream.readObject();
         System.out.println("кол-во оф: "+officeFloor.getCountSpaces());
+
+
+        PlacementExchanger placementExchanger = new PlacementExchanger();
+        Floor floor = dwellingFloor;
+        placementExchanger.exchangeFloorRooms(floor,0,floor,0);
 
 
 
