@@ -5,6 +5,7 @@ import interfaces.Space;
 import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 public class OfficeFloor implements Floor, Serializable {
     private int size;
@@ -23,6 +24,26 @@ public class OfficeFloor implements Floor, Serializable {
             add(new OfficeNode(offices[i]));
         }
 
+    }
+
+    public Space iterator(){
+
+        return null;//todo доделать
+
+    }
+
+
+    private class SpaceIterator implements Iterator<Space> {
+
+        @Override
+        public boolean hasNext() {
+            return (next() != head);
+        }
+
+        @Override
+        public Space next() {
+            return next();
+        }
     }
 
     private void add( OfficeNode node){

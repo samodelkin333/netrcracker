@@ -5,6 +5,7 @@ import interfaces.Space;
 import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
+import java.util.Iterator;
 
 public class DwellingFloor implements Floor, Serializable {
     private Space[] flats;
@@ -25,6 +26,11 @@ public class DwellingFloor implements Floor, Serializable {
         }
     }
 
+    @Override
+    public Space iterator() {
+        return null;
+    }
+
     //Создайте метод получения количества квартир на этаже.
     public int getCountSpaces()
     {
@@ -41,6 +47,7 @@ public class DwellingFloor implements Floor, Serializable {
 
         return allArea;
     }
+
 
     //Создайте метод получения массива квартир этажа.
     public Space[] getMasSpaces() {
