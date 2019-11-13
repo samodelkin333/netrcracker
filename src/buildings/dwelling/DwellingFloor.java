@@ -6,20 +6,21 @@ import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
-public class DwellingFloor implements Floor, Serializable {
+public class DwellingFloor implements Floor, Serializable, Cloneable {
     private Space[] flats;
 
     //Конструктор может принимать массив квартир этажа.
     public  DwellingFloor(Space[] flats){
-        Space[] copyFlats = new Flat[flats.length];
+        Space[] copyFlats = new Space[flats.length];
         System.arraycopy(flats,0,copyFlats,0,copyFlats.length);
         this.flats = flats;
     }
 
     //Конструктор может принимать количество квартир на этаже.
     public DwellingFloor(int count){
-        if (count < 0) throw new SpaceIndexOutOfBoundsException("count <=0");
+        if (count < 0) throw new SpaceIndexOutOfBoundsException("count <0");
         flats = new Flat[count];
         for (int i = 0; i < flats.length ; i++) {
             flats[i] = new Flat();
@@ -27,9 +28,27 @@ public class DwellingFloor implements Floor, Serializable {
     }
 
     @Override
-    public Space iterator() {
+    public Iterator<Space> iterator() {
         return null;
     }
+
+    private class SpaceIterator implements Iterator<Space> {
+        int index = 0;
+
+        public boolean hasNext() {
+            if (index < flats.length) return true;
+            return false;
+        }
+
+        @Override
+        public Space next() {
+            if(index< flats.length) {
+                return flats[index++];
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
 
     //Создайте метод получения количества квартир на этаже.
     public int getCountSpaces()
@@ -51,7 +70,7 @@ public class DwellingFloor implements Floor, Serializable {
 
     //Создайте метод получения массива квартир этажа.
     public Space[] getMasSpaces() {
-        Space[] retFlats = new Flat[flats.length];
+        Space[] retFlats = new Space[flats.length];
         int curIndex = 0;
         for (int i = 0; i < flats.length; i++) {
                 retFlats[curIndex] = flats[i];

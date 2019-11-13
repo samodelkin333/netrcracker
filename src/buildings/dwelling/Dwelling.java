@@ -7,25 +7,53 @@ import interfaces.Building;
 import interfaces.Space;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Dwelling implements Building, Serializable {
     private Floor[] dwellingFloors;
 
     //Конструктор может принимать массив этажей дома.
     public Dwelling( Floor[] dwellingFloors) {
-        Floor[] copyDwellingFloors = new DwellingFloor[dwellingFloors.length];
+        Floor[] copyDwellingFloors = new Floor[dwellingFloors.length];
         System.arraycopy(dwellingFloors,0,copyDwellingFloors,0,dwellingFloors.length);
         this.dwellingFloors = copyDwellingFloors;
     }
 
     //Конструктор может принимать количество этажей и массив количества квартир поэтажам.
-    public Dwelling(int countDwellingFloors, int countFlats){
+    public Dwelling(int countDwellingFloors, int[] countFlats){
         if(countDwellingFloors <= 0) throw new SpaceIndexOutOfBoundsException("floors <= 0");
-        if(countFlats <=0) throw  new FloorIndexOutOfBoundsException("flats <= 0");
-        Flat[] flats = new Flat[countFlats];
-        dwellingFloors = new DwellingFloor[countDwellingFloors];
+        dwellingFloors = new Floor[countDwellingFloors];
         for (int i = 0; i < countDwellingFloors ; i++) {
-            dwellingFloors[i] = new DwellingFloor(i);
+            if(countFlats[i] <=0) throw  new FloorIndexOutOfBoundsException("flats <= 0");
+            Flat[] flats = new Flat[countFlats[i]];
+            dwellingFloors[i] = new DwellingFloor(flats);
+        }
+    }
+
+
+    public Iterator<Floor> iterator(){
+
+        return new FloorIterator();
+
+    }
+
+
+    private class FloorIterator implements Iterator<Floor> {
+
+        int index = 0;
+
+        @Override
+        public boolean hasNext() {
+            return (index < dwellingFloors.length);
+        }
+
+        @Override
+        public Floor next()  {
+            if (hasNext()){
+                return  dwellingFloors[index++];
+            }
+            throw new NoSuchElementException();
         }
     }
 
@@ -47,8 +75,8 @@ public class Dwelling implements Building, Serializable {
     //Создайте метод получения общей площади квартир дома.
     public double getAreaSpaces(){
         double count = 0;
-        for (int i = 0; i < dwellingFloors.length ; i++) {
-            count+=dwellingFloors[i].getAreas();
+        for (Floor e: dwellingFloors) {
+            count+=e.getAreas();
         }
         return count;
     }
@@ -56,8 +84,8 @@ public class Dwelling implements Building, Serializable {
     //Создайте метод получения общего количества комнат дома.
     public int getRoomsFloors(){
         int rooms = 0;
-        for (int i = 0; i < dwellingFloors.length ; i++) {
-            rooms+= dwellingFloors[i].getRooms();
+        for (Floor e: dwellingFloors) {
+            rooms+= e.getRooms();
         }
         return rooms;
     }
@@ -79,8 +107,7 @@ public class Dwelling implements Building, Serializable {
         dwellingFloors[index] = floor;
     }
 
-    public int[] getIndexFlat(int index)
-    {
+    public int[] getIndexFlat(int index) {
         if(index<0||index > getSpaces()) throw new SpaceIndexOutOfBoundsException();
         int count = 0;
         for (int i = 0; i < dwellingFloors.length ; i++) {
@@ -92,6 +119,7 @@ public class Dwelling implements Building, Serializable {
         }
         return null;
     }
+
     //Создайте метод получения объекта квартиры по ее номеру в доме.
     public Space getSpace(int index){
         if(index<0||index >= getSpaces()) throw new SpaceIndexOutOfBoundsException();
@@ -125,8 +153,8 @@ public class Dwelling implements Building, Serializable {
     //Создайте метод getBestSpaces() получения самой большой по площади квартиры дома.
     public Space getBestSpaces(){
         Space maxFlat= dwellingFloors[0].getSpace(0);
-        for (int i = 0; i < dwellingFloors.length ; i++) {
-            if (maxFlat.getArea() < dwellingFloors[i].getBestSpace().getArea())maxFlat = dwellingFloors[i].getBestSpace();
+        for (Floor e:dwellingFloors) {
+            if (maxFlat.getArea() < e.getBestSpace().getArea())maxFlat = e.getBestSpace();
 
         }
         return maxFlat;
@@ -134,7 +162,7 @@ public class Dwelling implements Building, Serializable {
 
     //Создайте метод получения отсортированного по убыванию площадей массива квартир.
     public Space[] getSortedSpaceByArea(){
-        Space[] flats = new Flat[getSpaces()];
+        Space[] flats = new Space[getSpaces()];
         int count = 0;
         for (int i = 0; i < dwellingFloors.length; i++) {
             Space[] curFlats = dwellingFloors[i].getMasSpaces();

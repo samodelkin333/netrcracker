@@ -6,6 +6,7 @@ import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class OfficeFloor implements Floor, Serializable {
     private int size;
@@ -19,30 +20,40 @@ public class OfficeFloor implements Floor, Serializable {
 
     }
 
-    public OfficeFloor(Office[] offices){
+    public OfficeFloor(Space[] offices){
         for (int i = 0; i < offices.length; i++) {
             add(new OfficeNode(offices[i]));
         }
 
     }
 
-    public Space iterator(){
+    public Iterator<Space> iterator(){
 
-        return null;//todo доделать
+        return new SpaceIterator();
 
     }
 
 
     private class SpaceIterator implements Iterator<Space> {
 
+        int index = 0;
+        OfficeNode curNode = head;
+
         @Override
         public boolean hasNext() {
-            return (next() != head);
+            return (index < size);
         }
 
         @Override
-        public Space next() {
-            return next();
+        public Space next()  {
+            if (hasNext()){
+                index++;
+                OfficeNode retNode = curNode ;
+                curNode = curNode.next;
+                return retNode.value;
+
+            }
+            throw new NoSuchElementException();
         }
     }
 
@@ -59,7 +70,6 @@ public class OfficeFloor implements Floor, Serializable {
     }
 
     private void add(int index, OfficeNode node){
-        //if(index< 0 || index >= size) throw new SpaceIndexOutOfBoundsException("incorrect index");
         if(size == 0){
             head = node;
             node.next = head;

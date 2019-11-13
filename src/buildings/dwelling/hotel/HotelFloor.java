@@ -4,8 +4,8 @@ import buildings.dwelling.DwellingFloor;
 import interfaces.Space;
 
 public class HotelFloor extends DwellingFloor {
-    private double star;
-    private static final double constStar = 1;
+    private int star;
+    private static final int constStar = 1;
 
     public HotelFloor(int count){
         super(count);
@@ -19,11 +19,11 @@ public class HotelFloor extends DwellingFloor {
     }
 
 
-    public double getStar() {
+    public int getStar() {
         return star;
     }
 
-    public void setStar(double star) {
+    public void setStar(int star) {
         this.star = star;
     }
 }

@@ -7,29 +7,58 @@ import interfaces.Building;
 import interfaces.Space;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class OfficeBuilding implements Building, Serializable {
     private int size;
     private  OfficeFloorNode head;
     private  OfficeFloorNode tail;
 
-    public OfficeBuilding(int officeCount, int floorCount){
-        if(officeCount <= 0) throw new SpaceIndexOutOfBoundsException("index <= 0");
+    public OfficeBuilding(int[] officeCount, int floorCount){
         if(floorCount <=0) throw  new FloorIndexOutOfBoundsException("index <= 0");
-        for (int i = 0; i < officeCount ; i++) {
-            size=0;
-            add(size-1,new OfficeFloorNode(new OfficeFloor (floorCount)));
+        size=0;
+        for (int i = 0; i < floorCount ; i++) {
+            if(officeCount[i] <= 0) throw new SpaceIndexOutOfBoundsException("index <= 0");
+            add(size,new OfficeFloorNode(new OfficeFloor (officeCount[i])));
         }
 
     }
 
-    public  OfficeBuilding(OfficeFloor[] officeFloors){
+    public  OfficeBuilding(Floor[] officeFloors){
         size = 0;
         for (int i = 0; i < officeFloors.length; i++) {
-                add(i,new OfficeFloorNode(officeFloors[i]));
-            }
+            add(i,new OfficeFloorNode(officeFloors[i]));
+        }
 
     }
+
+    @Override
+    public Iterator<Floor> iterator() {
+        return new FloorIterator();
+    }
+
+    private class FloorIterator implements Iterator<Floor> {
+        int index = 0;
+        OfficeFloorNode curNode  = head;
+        public boolean hasNext() {
+            if (index < size) return true;
+            return false;
+        }
+
+        @Override
+        public Floor next() {
+            if(hasNext()) {
+                OfficeFloorNode retNode = curNode;
+                curNode = curNode.next;
+                return retNode.value;
+            }
+            throw new NoSuchElementException();
+        }
+    }
+
+
+
 
     private void add(int index, OfficeFloorNode node){
         //if (index > size) throw new FloorIndexOutOfBoundsException("index > size");
@@ -121,7 +150,7 @@ public class OfficeBuilding implements Building, Serializable {
     }
 
     public Floor[] getFloors(){
-        Floor[] officeFloors = new OfficeFloor[size];
+        Floor[] officeFloors = new Floor[size];
         OfficeFloorNode curNode = head;
         for (int i = 0; i < size; i++) {
             officeFloors[i] = curNode.value;

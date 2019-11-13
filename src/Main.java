@@ -2,6 +2,10 @@ import buildings.dwelling.Dwelling;
 import buildings.dwelling.DwellingFloor;
 import buildings.dwelling.Flat;
 import  buildings.*;
+import buildings.dwelling.hotel.Hotel;
+import buildings.dwelling.hotel.HotelFactory;
+import buildings.dwelling.hotel.HotelFloor;
+import buildings.office.OfficeFactory;
 import interfaces.Floor;
 import buildings.office.Office;
 import buildings.office.OfficeBuilding;
@@ -13,7 +17,7 @@ import java.io.*;
 
 public class Main {
     public static void main(String[] arg) throws IOException,ClassNotFoundException{
-        test3();
+        test4();
     }
     public static void test1(){
         Flat[] flats = new Flat[]{
@@ -174,8 +178,7 @@ public class Main {
 
     }
 
-    public static void test3() throws IOException, ClassNotFoundException
-    {
+    public static void test3() throws IOException, ClassNotFoundException {
         Flat[] flats = new Flat[]{
                 new Flat(),
                 new Flat(15, 102),
@@ -210,20 +213,22 @@ public class Main {
 
         };
 
+
+        OfficeBuilding officeBuilding = new OfficeBuilding(floors);
         Dwelling dwelling = new Dwelling(floors);
 
         Building building = dwelling;
 
-        Buildings.outputBuilding(dwelling, new FileOutputStream("./test.txt"));
+        Buildings.outputBuilding(officeBuilding, new FileOutputStream("./test.txt"));
         Building building1 =  Buildings.inputBuilding(new FileInputStream("./test.txt"));
-        Dwelling dwelling1 = new Dwelling(building1.getFloors());
+        OfficeBuilding dwelling1 = new OfficeBuilding(officeBuilding.getFloors());
         for (int i = 0; i < dwelling1.getCountFloors() ; i++) {
-            get(dwelling1.getFloor(i).getMasSpaces());
+            get(officeBuilding.getFloor(i).getMasSpaces());
         }
 
         Buildings.writeBuilding(dwelling, new FileWriter("./test1.txt"));
         Building building2 = Buildings.readBuilding(new FileReader("./test1.txt"));
-        dwelling1 = new Dwelling(building2.getFloors());
+       // dwelling1 = new Dwelling(building2.getFloors());
 
         for (int i = 0; i < dwelling1.getCountFloors() ; i++){
             get(dwelling1.getFloor(i).getMasSpaces());
@@ -264,6 +269,104 @@ public class Main {
         officeFloor = (OfficeFloor) objectInputStream.readObject();
         System.out.println("кол-во оф: "+officeFloor.getCountSpaces());
 
+
+
+    }
+
+    public static void test4() throws IOException{
+        Flat[] flats = new Flat[]{
+                new Flat(),
+                new Flat(15, 102),
+                new Flat(10, 67),
+
+        };
+
+        Flat[] flats2 = new Flat[]{
+                new Flat(),
+                new Flat(12, 55),
+                new Flat(11, 11),
+
+        };
+
+        Floor[] floors = new Floor[]{
+                new DwellingFloor(flats2),
+                new DwellingFloor(flats),
+                new DwellingFloor(flats2)
+        };
+
+        Office[] offices = new Office[]{
+                new Office(),
+                new Office(15, 290),
+                new Office(10, 67),
+
+        };
+
+        Office[] offices1 = new Office[]{
+                new Office(),
+                new Office(12, 55),
+                new Office(11, 11),
+
+        };
+
+        HotelFloor[] hotelFloors = new HotelFloor[]{
+                new HotelFloor(offices),
+                new HotelFloor(offices1),
+                new HotelFloor(offices),
+        };
+
+
+
+        Dwelling dwelling = new Dwelling(floors);
+        System.out.println(dwelling.getSpaces());
+        Buildings.outputBuilding(dwelling, new FileOutputStream("./Dwelling.txt"));
+        Building building = Buildings.inputBuilding( new FileInputStream("./Dwelling.txt"));
+        System.out.println(building.getSpaces());
+
+        OfficeBuilding officeBuilding = new OfficeBuilding(floors);
+        Buildings.setBuildingFactory(new OfficeFactory());
+        System.out.println(officeBuilding.getSpaces());
+        Buildings.outputBuilding(officeBuilding, new FileOutputStream("./Dwelling.txt"));
+        building = Buildings.inputBuilding( new FileInputStream("./Dwelling.txt"));
+        System.out.println(building.getSpaces());
+
+        Hotel hotel = new Hotel(hotelFloors);
+        System.out.println(hotel.getMaxCoeff());
+        Space space = hotel.getBestSpace();
+        System.out.println(space.getRoom());
+
+        Buildings.setBuildingFactory(new HotelFactory());
+        System.out.println(hotel.getSpaces());
+
+        System.out.println("-----------------------------------");
+
+        for(Space space1: hotel.getSortedSpaceByArea()){
+            System.out.println(space1);
+        }
+
+
+        FileOutputStream fos = new FileOutputStream("./Dwelling.txt");
+        Buildings.outputBuilding(hotel, fos);
+        fos.close();
+
+        hotel = (Hotel) Buildings.inputBuilding( new FileInputStream("./Dwelling.txt"));
+
+        System.out.println(hotel.getSpaces());
+        for(Space space1: hotel.getSortedSpaceByArea()){
+            System.out.println(space1);
+        }
+
+
+
+        System.out.println(hotel.getSpaces());
+        System.out.println(hotel.getMaxCoeff());
+        System.out.println(hotel.getFloor(0).getSpace(0));
+
+        Buildings.setBuildingFactory(new OfficeFactory());
+        Buildings.writeBuilding(officeBuilding, new FileWriter("./test1.txt"));
+        building = Buildings.readBuilding(new FileReader("./test1.txt"));
+
+        Buildings.setBuildingFactory(new HotelFactory());
+        Buildings.writeBuilding(hotel, new FileWriter("./test1.txt"));
 
 
     }

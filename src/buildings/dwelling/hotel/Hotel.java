@@ -7,9 +7,8 @@ import interfaces.Space;
 
 public class Hotel extends Dwelling {
 
-    public Hotel(int countFloors, int countSpaces){
+    public Hotel(int countFloors, int[] countSpaces){
         super(countFloors,countSpaces);
-
 
     }
 
@@ -33,7 +32,7 @@ public class Hotel extends Dwelling {
     public Space getBestSpace(){
         Floor[] floors = getFloors();
         double maxCoeff=0;
-        Space bestSpace;
+        Space bestSpace = null;
         for (int i = 0; i < floors.length ; i++) {
             if (floors[i] instanceof HotelFloor){
                 HotelFloor floor = (HotelFloor) floors[i];
@@ -46,7 +45,7 @@ public class Hotel extends Dwelling {
 
             }
         }
-        return null;
+        return bestSpace;
     }
 }
 

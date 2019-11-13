@@ -5,7 +5,7 @@ import interfaces.Space;
 import java.util.Iterator;
 
 public interface Floor {
-    Space iterator();
+    Iterator<Space> iterator();
     int getCountSpaces();
     double getAreas();
     int getRooms();

@@ -1,6 +1,10 @@
 package interfaces;
 
+import java.util.Iterator;
+
 public interface Building {
+
+    Iterator<Floor> iterator();
     //получения количества этажей в здании,
     int getCountFloors();
     //получения количества помещений в здании,
