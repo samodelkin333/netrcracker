@@ -58,5 +58,17 @@ public class Hotel extends Dwelling {
         return stringBuilder.toString();
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Hotel) return false;
+        Hotel hotel = (Hotel) o;
+        if(this.getCountFloors() != hotel.getCountFloors()) return false;
+        for (int i = 0; i < getCountFloors(); i++) {
+            if(!getFloor(i).equals(hotel.getFloor(i))) return false;
+
+        }
+        return true;
+    }
 }
 

@@ -189,7 +189,11 @@ public class Dwelling implements Building, Serializable {
         if (this == o) return true;
         if (o instanceof Dwelling) return false;
         Dwelling dwelling = (Dwelling) o;
-        return Arrays.equals(dwellingFloors, dwelling.dwellingFloors);
+        if(dwelling.dwellingFloors.length != dwellingFloors.length) return false;
+        for (int i = 0; i < dwellingFloors.length; i++) {
+            if(!dwellingFloors[i].equals(dwelling.dwellingFloors[i])) return false;
+        }
+        return true;
     }
 
     @Override

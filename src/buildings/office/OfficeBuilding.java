@@ -9,6 +9,7 @@ import interfaces.Space;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class OfficeBuilding implements Building, Serializable {
     private int size;
@@ -269,5 +270,25 @@ public class OfficeBuilding implements Building, Serializable {
         }
         stringBuilder.append(")");
         return stringBuilder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof OfficeBuilding) return false;
+        OfficeBuilding officeBuilding = (OfficeBuilding) o;
+        OfficeFloorNode curNode = head;
+        OfficeFloorNode curNode1 = officeBuilding.head;
+        for (int i = 0; i < size ; i++) {
+            if (!(curNode.value.equals(curNode1.value)))return false;
+            curNode = curNode.next;
+            curNode1 = curNode1.next;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, head, tail);
     }
 }
