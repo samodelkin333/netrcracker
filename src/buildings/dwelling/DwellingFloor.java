@@ -5,6 +5,7 @@ import interfaces.Space;
 import buildings.exception.SpaceIndexOutOfBoundsException;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -153,4 +154,30 @@ public class DwellingFloor implements Floor, Serializable, Cloneable {
         return maxFlat;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof DwellingFloor) return false;
+        DwellingFloor dwellingFloor = (DwellingFloor) o;
+        if(!(this.getCountSpaces() == dwellingFloor.getCountSpaces())) return  false;
+        for (int i = 0; i < this.getCountSpaces() ; i++) {
+            if(!flats[i].equals(dwellingFloor.flats)) return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(flats);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("DwellingFloor (%s, ",getCountSpaces()));
+        for (int i = 0; i <flats.length ; i++) {
+            stringBuilder.append(flats[i].toString()+", ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 }

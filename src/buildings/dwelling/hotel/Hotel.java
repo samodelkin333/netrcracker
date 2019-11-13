@@ -47,5 +47,16 @@ public class Hotel extends Dwelling {
         }
         return bestSpace;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("Dwelling (%s, &s,  ",getCountFloors(), getMaxCoeff()));
+        for (int i = 0; i < getCountFloors() ; i++) {
+            stringBuilder.append(getFloor(i).toString()+", ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
+
 }
 

@@ -7,6 +7,7 @@ import interfaces.Building;
 import interfaces.Space;
 
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -183,4 +184,26 @@ public class Dwelling implements Building, Serializable {
         return flats;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof Dwelling) return false;
+        Dwelling dwelling = (Dwelling) o;
+        return Arrays.equals(dwellingFloors, dwelling.dwellingFloors);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(dwellingFloors);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("Dwelling (%s, ",dwellingFloors.length));
+        for (int i = 0; i < dwellingFloors.length ; i++) {
+            stringBuilder.append(dwellingFloors[i].toString()+", ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 }

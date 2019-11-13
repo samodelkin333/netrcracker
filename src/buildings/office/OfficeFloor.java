@@ -7,6 +7,7 @@ import buildings.exception.SpaceIndexOutOfBoundsException;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class OfficeFloor implements Floor, Serializable {
     private int size;
@@ -207,4 +208,35 @@ public class OfficeFloor implements Floor, Serializable {
         return retNode.value;
     }
 
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("OfficeFloor(%s, ",size));
+        OfficeNode curNode = head;
+        for (int i = 0; i < size; i++) {
+            stringBuilder.append(curNode.value.toString()+", ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o instanceof OfficeFloor) return false;
+        OfficeFloor officeFloor = (OfficeFloor) o;
+        if (!(this.size == officeFloor.size)) return false;
+        OfficeNode curNode = head;
+        OfficeNode curNode1 = officeFloor.head;
+        for (int i = 0; i < size ; i++) {
+            if (!(curNode.value.equals(curNode1.value)))return false;
+            curNode = curNode.next;
+            curNode1 = curNode1.next;
+        }
+       return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(size, head, tail);
+    }
 }

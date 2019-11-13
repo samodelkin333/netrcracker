@@ -3,8 +3,10 @@ package buildings.office;
 import buildings.exception.InvalidRoomsCountException;
 import buildings.exception.InvalidSpaceAreaException;
 import interfaces.Space;
-
+import java.util.Objects;
 import java.io.Serializable;
+import java.lang.*;
+
 
 public class Office implements Space, Serializable {
     private int room;
@@ -43,5 +45,23 @@ public class Office implements Space, Serializable {
 
         if(area <=0) throw new InvalidSpaceAreaException("areas <= 0");
         this.area = area;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Office (%s, %s)",room,area);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Office)) return false;
+        Office office = (Office) o;
+        return (this.room == office.room) && (Double.compare(this.area, office.area)==0);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(room, area);
     }
 }

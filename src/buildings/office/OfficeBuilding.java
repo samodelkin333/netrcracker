@@ -260,5 +260,14 @@ public class OfficeBuilding implements Building, Serializable {
         return offices;
     }
 
-
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder(String.format("OfficeBuilding (%s, ", size));
+        OfficeFloorNode curNode = head;
+        for (int i = 0; i < size ; i++) {
+            stringBuilder.append(curNode.value.toString()+", ");
+        }
+        stringBuilder.append(")");
+        return stringBuilder.toString();
+    }
 }
